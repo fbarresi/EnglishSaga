@@ -59,6 +59,10 @@ body {
 
 .brand-icon { font-size: 1.6rem; }
 
+.profile-menu-wrapper {
+  position: relative;
+}
+
 .profile-badge {
   display: flex;
   align-items: center;
@@ -68,7 +72,46 @@ body {
   padding: 0.35rem 0.75rem;
   border-radius: 999px;
   backdrop-filter: blur(6px);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
 }
+
+.profile-caret {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  margin-left: 0.1rem;
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: 0.4rem;
+  min-width: 220px;
+  z-index: 20;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.dropdown-item:hover { background: var(--color-surface-muted); }
+
+.dropdown-item-danger { color: var(--color-error); }
 
 .profile-level {
   background: #fff;
@@ -190,6 +233,14 @@ input[type="text"]:focus { border-color: var(--color-primary); }
   font-size: 1.1rem;
   padding: 0.4rem 0.7rem;
 }
+
+.btn-danger {
+  background: var(--color-error);
+  color: #fff;
+  box-shadow: var(--shadow-small);
+}
+
+.btn-danger:hover { background: #b91c1c; }
 
 /* ===================== SAGA / CHAPTERS ===================== */
 .saga-intro {
@@ -397,5 +448,36 @@ input[type="text"]:focus { border-color: var(--color-primary); }
 }
 
 .app-footer a { color: #fff; font-weight: 700; }
+
+/* ===================== MODAL ===================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 20, 32, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  z-index: 50;
+}
+
+.modal-card {
+  max-width: 420px;
+  width: 100%;
+  text-align: left;
+}
+
+.modal-card h2 { margin-top: 0; }
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 420px) {
+  .modal-actions { flex-direction: row-reverse; justify-content: flex-start; }
+}
 
 [hidden] { display: none !important; }

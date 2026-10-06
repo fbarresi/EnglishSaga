@@ -17,11 +17,17 @@
       <span class="brand-icon">📖</span>
       <span class="brand-name">English Saga</span>
     </div>
-    <div class="profile-badge" id="profileBadge" hidden>
-      <div class="profile-level" id="profileLevel">Lv.1</div>
-      <div class="profile-info">
-        <span id="profileName">—</span>
-        <span class="profile-points"><span id="profileTotalPoints">0</span> pts</span>
+    <div class="profile-menu-wrapper" id="profileMenuWrapper" hidden>
+      <button type="button" class="profile-badge" id="profileBadge" aria-haspopup="true" aria-expanded="false">
+        <div class="profile-level" id="profileLevel">Lv.1</div>
+        <div class="profile-info">
+          <span id="profileName">—</span>
+          <span class="profile-points"><span id="profileTotalPoints">0</span> pts</span>
+        </div>
+        <span class="profile-caret">▾</span>
+      </button>
+      <div class="profile-dropdown" id="profileDropdown" hidden>
+        <button type="button" class="dropdown-item dropdown-item-danger" id="deleteAccountBtn">🗑️ Delete profile &amp; progress</button>
       </div>
     </div>
   </header>
@@ -100,6 +106,18 @@
   <footer class="app-footer">
     <p>Made with ❤ for language learners · <a href="https://github.com/" id="repoLink" target="_blank" rel="noopener">Fork this project on GitHub</a></p>
   </footer>
+
+  <!-- ===================== DELETE ACCOUNT CONFIRMATION MODAL ===================== -->
+  <div class="modal-overlay" id="deleteAccountModal" hidden>
+    <div class="modal-card card" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+      <h2 id="deleteModalTitle">Delete profile &amp; progress?</h2>
+      <p>This will permanently erase <strong id="deleteModalUsername">your</strong> profile, level, and <strong>all learning points for every chapter</strong> from this browser. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Yes, delete everything</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="js/app.js" defer></script>

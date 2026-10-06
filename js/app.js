@@ -59,10 +59,18 @@
   // ------------------------------------------------------------------
 
   const el = {
+    profileMenuWrapper: document.getElementById("profileMenuWrapper"),
     profileBadge: document.getElementById("profileBadge"),
+    profileDropdown: document.getElementById("profileDropdown"),
     profileLevel: document.getElementById("profileLevel"),
     profileName: document.getElementById("profileName"),
     profileTotalPoints: document.getElementById("profileTotalPoints"),
+    deleteAccountBtn: document.getElementById("deleteAccountBtn"),
+
+    deleteAccountModal: document.getElementById("deleteAccountModal"),
+    deleteModalUsername: document.getElementById("deleteModalUsername"),
+    cancelDeleteBtn: document.getElementById("cancelDeleteBtn"),
+    confirmDeleteBtn: document.getElementById("confirmDeleteBtn"),
 
     screens: {
       onboarding: document.getElementById("screen-onboarding"),
@@ -138,13 +146,64 @@
   function renderProfileBadge() {
     const { state } = appState;
     if (!state || !state.username) {
-      el.profileBadge.hidden = true;
+      el.profileMenuWrapper.hidden = true;
+      closeProfileDropdown();
       return;
     }
-    el.profileBadge.hidden = false;
+    el.profileMenuWrapper.hidden = false;
     el.profileName.textContent = state.username;
     el.profileTotalPoints.textContent = state.totalPoints;
     el.profileLevel.textContent = `Lv.${levelForPoints(state.totalPoints)}`;
+  }
+
+  // ------------------------------------------------------------------
+  // Profile dropdown menu
+  // ------------------------------------------------------------------
+
+  function toggleProfileDropdown() {
+    const isOpen = !el.profileDropdown.hidden;
+    if (isOpen) closeProfileDropdown();
+    else openProfileDropdown();
+  }
+
+  function openProfileDropdown() {
+    el.profileDropdown.hidden = false;
+    el.profileBadge.setAttribute("aria-expanded", "true");
+    document.addEventListener("click", handleOutsideDropdownClick, { capture: true });
+  }
+
+  function closeProfileDropdown() {
+    el.profileDropdown.hidden = true;
+    el.profileBadge.setAttribute("aria-expanded", "false");
+    document.removeEventListener("click", handleOutsideDropdownClick, { capture: true });
+  }
+
+  function handleOutsideDropdownClick(event) {
+    if (!el.profileMenuWrapper.contains(event.target)) closeProfileDropdown();
+  }
+
+  // ------------------------------------------------------------------
+  // Delete account / progress
+  // ------------------------------------------------------------------
+
+  function openDeleteAccountModal() {
+    closeProfileDropdown();
+    el.deleteModalUsername.textContent = appState.state.username || "your";
+    el.deleteAccountModal.hidden = false;
+  }
+
+  function closeDeleteAccountModal() {
+    el.deleteAccountModal.hidden = true;
+  }
+
+  function confirmDeleteAccount() {
+    localStorage.removeItem(STORAGE_KEY);
+    appState.state = createDefaultState();
+    appState.round = null;
+    closeDeleteAccountModal();
+    renderProfileBadge();
+    el.usernameInput.value = "";
+    showScreen("onboarding");
   }
 
   // ------------------------------------------------------------------
@@ -410,6 +469,20 @@
     el.quitQuizBtn.addEventListener("click", quitRound);
     el.retryChapterBtn.addEventListener("click", () => startRound(appState.round.chapterId));
     el.backToChaptersBtn.addEventListener("click", quitRound);
+
+    el.profileBadge.addEventListener("click", toggleProfileDropdown);
+    el.deleteAccountBtn.addEventListener("click", openDeleteAccountModal);
+    el.cancelDeleteBtn.addEventListener("click", closeDeleteAccountModal);
+    el.confirmDeleteBtn.addEventListener("click", confirmDeleteAccount);
+    el.deleteAccountModal.addEventListener("click", (event) => {
+      if (event.target === el.deleteAccountModal) closeDeleteAccountModal();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeProfileDropdown();
+        closeDeleteAccountModal();
+      }
+    });
   }
 
   async function init() {
