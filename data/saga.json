@@ -1,0 +1,58 @@
+{
+  "title": "The Beginner's Saga",
+  "description": "A short example saga to get you started learning basic English vocabulary.",
+  "baseLanguage": "de",
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "title": "Chapter 1: Everyday Basics",
+      "description": "Common everyday words to get you started.",
+      "words": [
+        { "en": "hello", "translation": "hallo" },
+        { "en": "goodbye", "translation": "auf wiedersehen" },
+        { "en": "please", "translation": "bitte" },
+        { "en": "thank you", "translation": "danke" },
+        { "en": "yes", "translation": "ja" },
+        { "en": "no", "translation": "nein" },
+        { "en": "friend", "translation": "freund" },
+        { "en": "water", "translation": "wasser" },
+        { "en": "food", "translation": "essen" },
+        { "en": "house", "translation": "haus" }
+      ]
+    },
+    {
+      "id": "chapter-2",
+      "title": "Chapter 2: People and Family",
+      "description": "Words to describe the people around you.",
+      "words": [
+        { "en": "mother", "translation": "mutter" },
+        { "en": "father", "translation": "vater" },
+        { "en": "sister", "translation": "schwester" },
+        { "en": "brother", "translation": "bruder" },
+        { "en": "child", "translation": "kind" },
+        { "en": "woman", "translation": "frau" },
+        { "en": "man", "translation": "mann" },
+        { "en": "family", "translation": "familie" },
+        { "en": "teacher", "translation": "lehrer" },
+        { "en": "doctor", "translation": "arzt" }
+      ]
+    },
+    {
+      "id": "chapter-3",
+      "title": "Chapter 3: Daily Life",
+      "description": "Vocabulary for everyday activities and objects.",
+      "words": [
+        { "en": "book", "translation": "buch" },
+        { "en": "car", "translation": "auto" },
+        { "en": "school", "translation": "schule" },
+        { "en": "work", "translation": "arbeit" },
+        { "en": "time", "translation": "zeit" },
+        { "en": "day", "translation": "tag" },
+        { "en": "night", "translation": "nacht" },
+        { "en": "morning", "translation": "morgen" },
+        { "en": "city", "translation": "stadt" },
+        { "en": "street", "translation": "straße" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>English Saga · Learn Vocabulary</title>
+<meta name="description" content="A fun, free, static web app to learn English vocabulary through story chapters and quizzes." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon">📖</span>
+      <span class="brand-name">English Saga</span>
+    </div>
+    <div class="profile-badge" id="profileBadge" hidden>
+      <div class="profile-level" id="profileLevel">Lv.1</div>
+      <div class="profile-info">
+        <span id="profileName">—</span>
+        <span class="profile-points"><span id="profileTotalPoints">0</span> pts</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ===================== ONBOARDING SCREEN ===================== -->
+    <section id="screen-onboarding" class="screen">
+      <div class="card onboarding-card">
+        <h1>Welcome to your English Saga ✨</h1>
+        <p>Embark on a vocabulary adventure, chapter by chapter. Tell us your name to begin your journey.</p>
+        <form id="onboardingForm">
+          <label for="usernameInput">Your name</label>
+          <input type="text" id="usernameInput" maxlength="24" placeholder="e.g. Alex" autocomplete="off" required />
+          <button type="submit" class="btn btn-primary">Start Learning</button>
+        </form>
+        <p class="hint">Your progress is saved only in this browser — no account needed.</p>
+      </div>
+    </section>
+
+    <!-- ===================== CHAPTERS SCREEN ===================== -->
+    <section id="screen-chapters" class="screen" hidden>
+      <div class="saga-intro">
+        <h1 id="sagaTitle">Saga</h1>
+        <p id="sagaDescription"></p>
+      </div>
+      <div id="chapterList" class="chapter-list"></div>
+    </section>
+
+    <!-- ===================== QUIZ SCREEN ===================== -->
+    <section id="screen-quiz" class="screen" hidden>
+      <div class="quiz-wrapper card">
+        <div class="quiz-header">
+          <button id="quitQuizBtn" class="btn btn-ghost" aria-label="Quit round">✕</button>
+          <div class="quiz-progress">
+            <div class="progress-bar"><div id="quizProgressFill" class="progress-fill"></div></div>
+            <span id="quizProgressLabel">Question 1 / 20</span>
+          </div>
+          <div class="quiz-score">⭐ <span id="quizScore">0</span></div>
+        </div>
+
+        <div id="quizQuestionArea" class="quiz-question-area">
+          <p class="question-kicker" id="questionKicker">Translate to German</p>
+          <h2 id="questionPrompt" class="question-prompt">word</h2>
+
+          <div id="choicesArea" class="choices-area" hidden></div>
+
+          <form id="textAnswerForm" class="text-answer-form" hidden>
+            <input type="text" id="textAnswerInput" autocomplete="off" placeholder="Type the English word…" />
+            <button type="submit" class="btn btn-primary">Check</button>
+          </form>
+        </div>
+
+        <div id="feedbackArea" class="feedback-area" hidden>
+          <p id="feedbackText"></p>
+          <button id="nextQuestionBtn" class="btn btn-primary">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ROUND SUMMARY SCREEN ===================== -->
+    <section id="screen-summary" class="screen" hidden>
+      <div class="card summary-card">
+        <h1>Round complete! 🎉</h1>
+        <p class="summary-score"><span id="summaryScore">0</span> / <span id="summaryTotal">20</span> correct</p>
+        <p id="summaryLevelUp" class="level-up-msg" hidden>🏅 Level up! You reached <span id="summaryNewLevel"></span></p>
+        <div class="summary-actions">
+          <button id="retryChapterBtn" class="btn btn-primary">Play Again</button>
+          <button id="backToChaptersBtn" class="btn btn-secondary">Back to Chapters</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Made with ❤ for language learners · <a href="https://github.com/" id="repoLink" target="_blank" rel="noopener">Fork this project on GitHub</a></p>
+  </footer>
+</div>
+
+<script src="js/app.js" defer></script>
+</body>
+</html>
