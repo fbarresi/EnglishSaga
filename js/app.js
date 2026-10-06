@@ -328,6 +328,7 @@
       el.choicesArea.innerHTML = "";
       el.textAnswerForm.hidden = false;
       el.textAnswerInput.value = "";
+      el.textAnswerInput.disabled = false;
       setTimeout(() => el.textAnswerInput.focus(), 50);
     } else {
       el.textAnswerForm.hidden = true;
