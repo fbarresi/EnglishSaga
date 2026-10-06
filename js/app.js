@@ -9,6 +9,8 @@
   const SAGA_DATA_URL = "data/saga.json";
   const QUESTIONS_PER_ROUND = 20;
   const POINTS_PER_LEVEL = 50;
+  const AUTO_ADVANCE_CORRECT_MS = 1100;
+  const AUTO_ADVANCE_WRONG_MS = 2600;
 
   const QUESTION_TYPES = {
     MC_TO_BASE: "mc_to_base", // show english, choose base-language translation
@@ -22,6 +24,8 @@
     state: null,
     round: null,
   };
+
+  let autoAdvanceTimer = null;
 
   // ------------------------------------------------------------------
   // Persistence
@@ -98,6 +102,9 @@
     feedbackArea: document.getElementById("feedbackArea"),
     feedbackText: document.getElementById("feedbackText"),
     nextQuestionBtn: document.getElementById("nextQuestionBtn"),
+    autoAdvanceBar: document.getElementById("autoAdvanceBar"),
+    autoAdvanceFill: document.getElementById("autoAdvanceFill"),
+    cancelAutoAdvanceBtn: document.getElementById("cancelAutoAdvanceBtn"),
 
     summaryScore: document.getElementById("summaryScore"),
     summaryTotal: document.getElementById("summaryTotal"),
@@ -309,6 +316,7 @@
     el.quizProgressFill.style.width = `${(round.currentIndex / round.questions.length) * 100}%`;
 
     el.feedbackArea.hidden = true;
+    cancelAutoAdvance();
     round.answered = false;
 
     const baseLangLabel = (appState.saga.baseLanguage || "base").toUpperCase();
@@ -399,9 +407,41 @@
     el.quizScore.textContent = round.score;
     const isLastQuestion = round.currentIndex === round.questions.length - 1;
     el.nextQuestionBtn.textContent = isLastQuestion ? "Finish →" : "Next →";
+
+    startAutoAdvance(isCorrect ? AUTO_ADVANCE_CORRECT_MS : AUTO_ADVANCE_WRONG_MS);
+  }
+
+  // ------------------------------------------------------------------
+  // Auto-advance (with cancel option)
+  // ------------------------------------------------------------------
+
+  function startAutoAdvance(delayMs) {
+    cancelAutoAdvance();
+    el.autoAdvanceBar.hidden = false;
+    el.autoAdvanceFill.style.transition = "none";
+    el.autoAdvanceFill.style.transform = "scaleX(1)";
+    // Force reflow so the subsequent transition actually animates.
+    void el.autoAdvanceFill.offsetWidth;
+    el.autoAdvanceFill.style.transition = `transform ${delayMs}ms linear`;
+    el.autoAdvanceFill.style.transform = "scaleX(0)";
+    autoAdvanceTimer = setTimeout(() => {
+      autoAdvanceTimer = null;
+      goToNextQuestion();
+    }, delayMs);
+  }
+
+  function cancelAutoAdvance() {
+    if (autoAdvanceTimer) {
+      clearTimeout(autoAdvanceTimer);
+      autoAdvanceTimer = null;
+    }
+    el.autoAdvanceBar.hidden = true;
+    el.autoAdvanceFill.style.transition = "none";
+    el.autoAdvanceFill.style.transform = "scaleX(1)";
   }
 
   function goToNextQuestion() {
+    cancelAutoAdvance();
     const { round } = appState;
     if (round.currentIndex < round.questions.length - 1) {
       round.currentIndex += 1;
@@ -432,6 +472,7 @@
   }
 
   function quitRound() {
+    cancelAutoAdvance();
     appState.round = null;
     renderChaptersScreen();
     showScreen("chapters");
@@ -467,6 +508,7 @@
     el.onboardingForm.addEventListener("submit", handleOnboardingSubmit);
     el.textAnswerForm.addEventListener("submit", handleTextAnswer);
     el.nextQuestionBtn.addEventListener("click", goToNextQuestion);
+    el.cancelAutoAdvanceBtn.addEventListener("click", cancelAutoAdvance);
     el.quitQuizBtn.addEventListener("click", quitRound);
     el.retryChapterBtn.addEventListener("click", () => startRound(appState.round.chapterId));
     el.backToChaptersBtn.addEventListener("click", quitRound);

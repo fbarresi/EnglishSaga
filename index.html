@@ -82,8 +82,14 @@
         </div>
 
         <div id="feedbackArea" class="feedback-area" hidden>
-          <p id="feedbackText"></p>
-          <button id="nextQuestionBtn" class="btn btn-primary">Next →</button>
+          <div class="feedback-row">
+            <p id="feedbackText"></p>
+            <button id="nextQuestionBtn" class="btn btn-primary">Next →</button>
+          </div>
+          <div id="autoAdvanceBar" class="auto-advance-bar" hidden>
+            <div class="auto-advance-track"><div id="autoAdvanceFill" class="auto-advance-fill"></div></div>
+            <button type="button" id="cancelAutoAdvanceBtn" class="auto-advance-cancel">⏸ Keep reviewing</button>
+          </div>
         </div>
       </div>
     </section>

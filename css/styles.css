@@ -406,6 +406,12 @@ input[type="text"]:focus { border-color: var(--color-primary); }
   padding-top: 1.25rem;
   border-top: 1px solid var(--color-border);
   display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.feedback-row {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -415,6 +421,43 @@ input[type="text"]:focus { border-color: var(--color-primary); }
 #feedbackText { font-weight: 600; margin: 0; }
 #feedbackText.correct { color: var(--color-success); }
 #feedbackText.incorrect { color: var(--color-error); }
+
+.auto-advance-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.auto-advance-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-surface-muted);
+  overflow: hidden;
+}
+
+.auto-advance-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--color-primary), #9333ea);
+  border-radius: 999px;
+  transform-origin: left;
+  transition: transform linear;
+}
+
+.auto-advance-cancel {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.auto-advance-cancel:hover { background: var(--color-surface-muted); }
 
 /* ===================== SUMMARY ===================== */
 .summary-card { text-align: center; margin-top: 2rem; }
