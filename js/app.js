@@ -10,7 +10,6 @@
   const QUESTIONS_PER_ROUND = 20;
   const POINTS_PER_LEVEL = 50;
   const AUTO_ADVANCE_CORRECT_MS = 1100;
-  const AUTO_ADVANCE_WRONG_MS = 2600;
 
   const QUESTION_TYPES = {
     MC_TO_BASE: "mc_to_base", // show english, choose base-language translation
@@ -408,7 +407,11 @@
     const isLastQuestion = round.currentIndex === round.questions.length - 1;
     el.nextQuestionBtn.textContent = isLastQuestion ? "Finish →" : "Next →";
 
-    startAutoAdvance(isCorrect ? AUTO_ADVANCE_CORRECT_MS : AUTO_ADVANCE_WRONG_MS);
+    if (isCorrect) {
+      startAutoAdvance(AUTO_ADVANCE_CORRECT_MS);
+    } else {
+      cancelAutoAdvance();
+    }
   }
 
   // ------------------------------------------------------------------
