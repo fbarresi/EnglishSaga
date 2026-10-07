@@ -6,6 +6,7 @@
   "use strict";
 
   const STORAGE_KEY = "englishSaga.state.v1";
+  const THEME_STORAGE_KEY = "englishSaga.theme.v1";
   const SAGA_DATA_URL = "data/saga.json";
   const QUESTIONS_PER_ROUND = 20;
   const POINTS_PER_LEVEL = 50;
@@ -62,6 +63,8 @@
   // ------------------------------------------------------------------
 
   const el = {
+    themeToggleBtn: document.getElementById("themeToggleBtn"),
+
     profileMenuWrapper: document.getElementById("profileMenuWrapper"),
     profileBadge: document.getElementById("profileBadge"),
     profileDropdown: document.getElementById("profileDropdown"),
@@ -498,6 +501,36 @@
   }
 
   // ------------------------------------------------------------------
+  // Theme (dark mode)
+  // ------------------------------------------------------------------
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    el.themeToggleBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+    el.themeToggleBtn.setAttribute(
+      "aria-label",
+      theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+    );
+  }
+
+  function initTheme() {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    applyTheme(stored || (prefersDark ? "dark" : "light"));
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const next = current === "dark" ? "light" : "dark";
+    applyTheme(next);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch (err) {
+      console.warn("Failed to save theme preference", err);
+    }
+  }
+
+  // ------------------------------------------------------------------
   // Bootstrap
   // ------------------------------------------------------------------
 
@@ -508,6 +541,8 @@
   }
 
   function wireEvents() {
+    el.themeToggleBtn.addEventListener("click", toggleTheme);
+
     el.onboardingForm.addEventListener("submit", handleOnboardingSubmit);
     el.textAnswerForm.addEventListener("submit", handleTextAnswer);
     el.nextQuestionBtn.addEventListener("click", goToNextQuestion);
@@ -532,6 +567,7 @@
   }
 
   async function init() {
+    initTheme();
     appState.state = loadState() || createDefaultState();
 
     try {

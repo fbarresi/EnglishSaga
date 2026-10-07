@@ -18,6 +18,22 @@
   font-size: 16px;
 }
 
+:root[data-theme="dark"] {
+  --color-bg-start: #1e1b3a;
+  --color-bg-end: #0f172a;
+  --color-surface: #1e2333;
+  --color-surface-muted: #2a3042;
+  --color-text: #e8e9f0;
+  --color-text-muted: #9aa0b4;
+  --color-primary: #9061f9;
+  --color-primary-dark: #7c4dec;
+  --color-success: #4ade80;
+  --color-error: #f87171;
+  --color-border: #3a4257;
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
 * { box-sizing: border-box; }
 
 html, body {
@@ -32,6 +48,7 @@ body {
   background: linear-gradient(160deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
   background-attachment: fixed;
   min-height: 100vh;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 #app {
@@ -47,7 +64,34 @@ body {
   justify-content: space-between;
   padding: 1rem 1.25rem;
   color: #fff;
+  gap: 0.75rem;
 }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.theme-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.theme-toggle-btn:hover { background: rgba(255, 255, 255, 0.25); }
+.theme-toggle-btn:active { transform: scale(0.95); }
 
 .brand {
   display: flex;

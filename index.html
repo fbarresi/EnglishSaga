@@ -7,6 +7,15 @@
 <meta name="description" content="A fun, free, static web app to learn English vocabulary through story chapters and quizzes." />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>" />
 <link rel="stylesheet" href="css/styles.css" />
+<script>
+  (function () {
+    try {
+      var stored = localStorage.getItem("englishSaga.theme.v1");
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-theme", stored || (prefersDark ? "dark" : "light"));
+    } catch (e) { /* localStorage unavailable; default theme applies */ }
+  })();
+</script>
 </head>
 <body>
 <div id="app">
@@ -17,17 +26,20 @@
       <span class="brand-icon">📖</span>
       <span class="brand-name">English Saga</span>
     </div>
-    <div class="profile-menu-wrapper" id="profileMenuWrapper" hidden>
-      <button type="button" class="profile-badge" id="profileBadge" aria-haspopup="true" aria-expanded="false">
-        <div class="profile-level" id="profileLevel">Lv.1</div>
-        <div class="profile-info">
-          <span id="profileName">—</span>
-          <span class="profile-points"><span id="profileTotalPoints">0</span> pts</span>
+    <div class="header-actions">
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <div class="profile-menu-wrapper" id="profileMenuWrapper" hidden>
+        <button type="button" class="profile-badge" id="profileBadge" aria-haspopup="true" aria-expanded="false">
+          <div class="profile-level" id="profileLevel">Lv.1</div>
+          <div class="profile-info">
+            <span id="profileName">—</span>
+            <span class="profile-points"><span id="profileTotalPoints">0</span> pts</span>
+          </div>
+          <span class="profile-caret">▾</span>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" hidden>
+          <button type="button" class="dropdown-item dropdown-item-danger" id="deleteAccountBtn">🗑️ Delete profile &amp; progress</button>
         </div>
-        <span class="profile-caret">▾</span>
-      </button>
-      <div class="profile-dropdown" id="profileDropdown" hidden>
-        <button type="button" class="dropdown-item dropdown-item-danger" id="deleteAccountBtn">🗑️ Delete profile &amp; progress</button>
       </div>
     </div>
   </header>
