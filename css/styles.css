@@ -413,6 +413,7 @@ input[type="text"]:focus { border-color: var(--color-primary); }
 
 .choice-btn {
   background: var(--color-surface-muted);
+  color: var(--color-text);
   border: 2px solid transparent;
   border-radius: var(--radius-md);
   padding: 0.9rem 1rem;
