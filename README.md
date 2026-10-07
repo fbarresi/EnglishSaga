@@ -42,7 +42,7 @@ All vocabulary lives in [`data/saga.json`](data/saga.json). It's a simple JSON f
 
 - `baseLanguage` is just a label for the UI (e.g. `de`, `fr`, `es`) describing the language of the `translation` field.
 - Each chapter is an independent "round pool" — add as many chapters and words as you like.
-- The example saga included here has **3 chapters and 30 words** (English → German) to help you get started quickly.
+- The example saga included here has **6 chapters and 112 words/phrases** (English → German) to help you get started quickly.
 
 ## 🍴 Make it your own!
 
