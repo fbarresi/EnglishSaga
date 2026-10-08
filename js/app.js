@@ -138,8 +138,38 @@
     return Math.floor(points / POINTS_PER_LEVEL) + 1;
   }
 
+  // Expand common contractions so typed answers like "I am" / "you are" are
+  // accepted even when the saga data uses the contracted form ("I'm" / "you're").
+  const CONTRACTION_EXPANSIONS = [
+    [/\bi'm\b/g, "i am"],
+    [/\byou're\b/g, "you are"],
+    [/\bwe're\b/g, "we are"],
+    [/\bthey're\b/g, "they are"],
+    [/\bhe's\b/g, "he is"],
+    [/\bshe's\b/g, "she is"],
+    [/\bit's\b/g, "it is"],
+    [/\bthat's\b/g, "that is"],
+    [/\bwhat's\b/g, "what is"],
+    [/\bisn't\b/g, "is not"],
+    [/\baren't\b/g, "are not"],
+    [/\bdon't\b/g, "do not"],
+    [/\bdoesn't\b/g, "does not"],
+    [/\bdidn't\b/g, "did not"],
+    [/\bcan't\b/g, "cannot"],
+    [/\bwon't\b/g, "will not"],
+    [/\blet's\b/g, "let us"],
+  ];
+
   function normalizeAnswer(str) {
-    return str.trim().toLowerCase().replace(/\s+/g, " ");
+    let normalized = str
+      .trim()
+      .toLowerCase()
+      .replace(/[\u2018\u2019]/g, "'") // curly apostrophes -> straight
+      .replace(/\s+/g, " ");
+    CONTRACTION_EXPANSIONS.forEach(([pattern, replacement]) => {
+      normalized = normalized.replace(pattern, replacement);
+    });
+    return normalized;
   }
 
   function showScreen(name) {
