@@ -288,11 +288,14 @@
     const words = chapter.words;
     const questions = [];
     const indexPool = shuffle(words.map((_, idx) => idx));
+    const allowedTypes = chapter.multipleChoiceOnly
+      ? Object.values(QUESTION_TYPES).filter((t) => t !== QUESTION_TYPES.TEXT_TO_ENGLISH)
+      : Object.values(QUESTION_TYPES);
 
     for (let i = 0; i < QUESTIONS_PER_ROUND; i++) {
       const wordIndex = indexPool[i % indexPool.length];
       const word = words[wordIndex];
-      const type = shuffle(Object.values(QUESTION_TYPES))[0];
+      const type = shuffle(allowedTypes)[0];
       questions.push(buildQuestion(words, wordIndex, word, type));
     }
     return questions;
@@ -351,7 +354,11 @@
     cancelAutoAdvance();
     round.answered = false;
 
-    const baseLangLabel = (appState.saga.baseLanguage || "base").toUpperCase();
+    const currentChapter = appState.saga.chapters.find((c) => c.id === appState.round.chapterId);
+    const baseLangLabel =
+      currentChapter && currentChapter.multipleChoiceOnly
+        ? "IPA"
+        : (appState.saga.baseLanguage || "base").toUpperCase();
 
     if (question.type === QUESTION_TYPES.MC_TO_BASE) {
       el.questionKicker.textContent = `English → ${baseLangLabel}`;
